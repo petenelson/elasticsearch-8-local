@@ -1,0 +1,17 @@
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.14.3
+    # restart: always
+    ports:
+      - "9308:9200"
+    mem_limit: 1024M
+    mem_reservation: 1024M
+    volumes:
+      - './config/elasticsearch/plugins:/usr/share/elasticsearch/plugins:cached'
+      - './data:/usr/share/elasticsearch/data:delegated'
+    environment:
+      - ES_JAVA_OPTS=-Xms450m -Xmx450m
+      - discovery.type=single-node
+      - cluster.routing.allocation.disk.threshold_enabled=false
+      - xpack.security.enabled=false
+
